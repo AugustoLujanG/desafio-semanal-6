@@ -16,7 +16,7 @@ registerRouter.post('/', async (req, res) => {
     await userModel.create({ firstName, lastName, age, email, password });
     req.session.firstName = firstName;
     req.session.email = email;
-    return res.status(201).redirect('/');
+    return res.status(201).render('success-login');
   } catch (e) {
     console.log(e);
     return res.status(400).render('error-page', { msg: 'Controla tu email y intenta más tarde' });
