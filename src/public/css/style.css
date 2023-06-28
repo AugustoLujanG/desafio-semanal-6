@@ -1,4 +1,5 @@
 body {
+  background: linear-gradient(to bottom, #012142, #380438);
   font-family: Arial, sans-serif;
 }
 
@@ -83,6 +84,7 @@ body {
 
 header.navbar {
   padding: 10px 0;
+  padding-right: 1.5rem;
 }
 
 header.navbar .container-fluid {
@@ -100,6 +102,10 @@ header.navbar .navbar-brand .brand-name {
 header.navbar .navbar-toggler {
   border: none;
   background-color: transparent;
+}
+
+.logout-link {
+  margin-top: 1.5rem;
 }
 
 /* Estilos de los enlaces del menú */
@@ -160,12 +166,24 @@ header.navbar .cart-wrapper .badge {
 }
 
 /* Estilos personalizados para los form*/
+
+.form-login {
+  background: linear-gradient(to bottom, #012142, #380438);
+  align-items: center;
+  display: flex;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
 .form-container {
   max-width: 400px;
   margin-bottom: 20px;
   padding: 20px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 10px;
   background-color: #f9f9f9;
   margin: 0 auto;
 }
@@ -179,6 +197,12 @@ header.navbar .cart-wrapper .badge {
   margin-bottom: 15px;
 }
 
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
 .form-container label {
   display: block;
   margin-bottom: 5px;
@@ -186,6 +210,7 @@ header.navbar .cart-wrapper .badge {
 }
 
 .form-container input[type='number'],
+.form-container input[type='password'],
 .form-container input[type='text'],
 .form-container input[type='url'] {
   width: 100%;
@@ -197,10 +222,13 @@ header.navbar .cart-wrapper .badge {
 }
 
 .form-container input[type='number']:focus,
+.form-container input[type='password']:focus,
 .form-container input[type='text']:focus,
-.form-container input[type='url']:focus {
+.form-container input[type='url']:focus,
+.btn:focus {
   outline: none;
   border-color: #7a8ce3;
+  box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
 }
 
 .form-container .btn {
@@ -225,8 +253,7 @@ header.navbar .cart-wrapper .badge {
   color: #fff;
 }
 
-.form-container .btn-primary:hover,
-.form-container .btn-danger:hover {
+.form-container .btn-primary:hover {
   background-color: #5969d6;
 }
 
@@ -246,6 +273,11 @@ header.navbar .cart-wrapper .badge {
     max-width: 100%;
     margin-bottom: 20px;
   }
+}
+
+.register-button {
+  margin-top: 10px;
+  text-align: center;
 }
 
 /* Estilos personalizados del chat */
@@ -347,7 +379,7 @@ header.navbar .cart-wrapper .badge {
 /* Estilos personalizados del footer */
 
 .footer {
-  background-color: #f8f9fa;
+  /* background-color: #f8f9fa; */
   padding: 20px 0;
   text-align: center;
 }
@@ -392,11 +424,49 @@ header.navbar .cart-wrapper .badge {
   object-fit: cover;
 }
 
-.deleteToCart {
+.deleteFromCart {
   margin-top: 10px;
 }
 
 .deleteCart {
   margin-top: 10px;
   width: 100%;
+}
+
+.error-container {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  margin-top: 100px;
+}
+
+.error-container h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.error-container p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.error-container a button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 3px;
+  border: none;
+  background-color: #7a8ce3;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.error-container a button:hover {
+  background-color: #5969d6;
 }

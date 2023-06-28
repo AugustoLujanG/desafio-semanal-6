@@ -1,19 +1,23 @@
 import express from 'express';
+import { checkUser } from '../middlewares/auth.js';
 import { cartService } from '../services/cart.service.js';
 
 export const cartsRouter = express.Router();
 
 // GET /:cid
 
-cartsRouter.get('/:cid', async (req, res) => {
+cartsRouter.get('/:cid', checkUser, async (req, res) => {
   try {
     const cartId = req.params.cid;
+    const user = req.session.firstName;
+    const isAdmin = req.session.admin;
+
     const cart = await cartService.getCart(cartId);
 
     const plainCart = cart.products.map(cart => cart.toObject());
 
     if (cart) {
-      res.status(200).render('carts', { plainCart, cartId: [cartId] });
+      res.status(200).render('carts', { plainCart, cartId: [cartId], user, isAdmin });
     } else {
       res.status(404).json({ message: `Carrito ${cartId} no encontrado` });
     }
@@ -24,7 +28,7 @@ cartsRouter.get('/:cid', async (req, res) => {
 
 // POST
 
-cartsRouter.post('/', async (req, res) => {
+cartsRouter.post('/', checkUser, async (req, res) => {
   try {
     const products = req.body;
     const newCart = await cartService.createCart(products);
@@ -37,7 +41,7 @@ cartsRouter.post('/', async (req, res) => {
 
 // POST /:cid
 
-cartsRouter.post('/:cid', async (req, res) => {
+cartsRouter.post('/:cid', checkUser, async (req, res) => {
   try {
     const cartId = req.params.cid;
     const products = req.body;
@@ -50,7 +54,7 @@ cartsRouter.post('/:cid', async (req, res) => {
 
 // PUT /:cid/product/:pid
 
-cartsRouter.put('/:cid/product/:pid', async (req, res) => {
+cartsRouter.put('/:cid/product/:pid', checkUser, async (req, res) => {
   try {
     const { cid, pid } = req.params;
     const cart = await cartService.addProductToCart(cid, pid);
@@ -62,7 +66,7 @@ cartsRouter.put('/:cid/product/:pid', async (req, res) => {
 
 // DELETE /:cid/product/:pid
 
-cartsRouter.delete('/:cid/product/:pid', async (req, res) => {
+cartsRouter.delete('/:cid/product/:pid', checkUser, async (req, res) => {
   try {
     const { cid, pid } = req.params;
     const cart = await cartService.deleteProduct(cid, pid);
@@ -75,7 +79,7 @@ cartsRouter.delete('/:cid/product/:pid', async (req, res) => {
 
 // DELETE /:cid
 
-cartsRouter.delete('/:cid', async (req, res) => {
+cartsRouter.delete('/:cid', checkUser, async (req, res) => {
   try {
     const cid = req.params.cid;
     await cartService.deleteCart(cid);

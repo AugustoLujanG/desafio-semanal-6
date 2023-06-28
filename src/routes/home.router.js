@@ -1,18 +1,23 @@
 import express from 'express';
+import { checkUser } from '../middlewares/auth.js';
 import { productService } from '../services/product.service.js';
 
 export const home = express.Router();
 
 // GET con limit
 
-home.get('/', async (req, res) => {
+home.get('/', checkUser, async (req, res) => {
   try {
     const queryParams = req.query;
+    const user = req.session.firstName;
+    const isAdmin = req.session.admin;
 
     const paginatedProductsResponse = await productService.getAll(queryParams);
     const paginatedProducts = paginatedProductsResponse.modifiedProducts;
     const paginated = paginatedProductsResponse.products;
-    res.status(200).render('home', { products: paginatedProducts, paginated: paginated });
+    res
+      .status(200)
+      .render('home', { products: paginatedProducts, paginated: paginated, user, isAdmin });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -20,7 +25,7 @@ home.get('/', async (req, res) => {
 
 // GET por ID
 
-home.get('/:pid', async (req, res) => {
+home.get('/:pid', checkUser, async (req, res) => {
   try {
     const id = req.params.pid;
     const productById = await productService.getById(id);
